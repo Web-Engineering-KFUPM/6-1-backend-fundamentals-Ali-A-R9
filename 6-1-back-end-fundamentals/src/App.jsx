@@ -340,12 +340,27 @@ REFLECTION QUESTIONS
 After you finish, answer these questions:
 
 1. What is the role of the back-end?
+The back-end handles logic and data. It processes requests from the client and sends responses back, such as text or JSON data.
+
 2. What happens when the browser opens a route?
+The browser sends a request to the server, and the server responds with data or content for that route.
+
 3. Who sends the request?
+The client (browser or React) sends the request.
+
 4. Who sends the response?
-5. What is the difference between text response and JSON response?
+The server (back-end) sends the response.
+
+5. What is the difference between 
+text response and JSON response?
+Text response: plain text (e.g., "Hello from server")
+JSON response: structured data (objects with key-value pairs)
+
 6. In this lab, which route is used by React to get student data?
+http://localhost:3000/student
+
 7. How does React use the returned student data?
+React fetches the data, stores it in state using useState, and displays it in the UI.
 
 ===================================================================
 END OF LAB INSTRUCTIONS
@@ -360,6 +375,7 @@ export default function App() {
   // Create state to store student data
   // Syntax hint:
   // const [student, setStudent] = useState(____);
+  const [student, setStudent] = useState(null);
 
   // TODO 8:
   // Request student data from the server when the page loads
@@ -369,6 +385,13 @@ export default function App() {
   //   .then((data) => {
   //     setStudent(data);
   //   });
+  useEffect(() => {
+    fetch('http://localhost:3000/student')
+      .then((res) => res.json())
+      .then((data) => {
+        setStudent(data);
+      });
+  }, []);
 
   return (
     <main className="app-shell">
